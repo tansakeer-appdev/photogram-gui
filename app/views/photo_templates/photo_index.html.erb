@@ -1,5 +1,26 @@
+<nav>
+      <ul>
+         <li> <a href="/users">Users</a> </li>
+         <li> <a href="/photos">Photos</a> </li>
+      </ul>
+    </nav>
 <h1>List of photos</h1>
 
+<hr>
+  <form action="/insert_photo">
+
+  <label for="im">Image</label>
+    <input id="im" name="q_image"> 
+
+  <label for="cap">Caption</label>
+    <textarea id="cap" name="q_caption"></textarea>
+
+    <label for="own">Owner ID</label>
+    <input if="own" name="q_ownid">
+
+    <button>Add photo</button>
+  </form>
+</hr>
 
 <table border="1">
   <tr>
