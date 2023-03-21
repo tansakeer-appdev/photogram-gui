@@ -9,8 +9,8 @@ class PhotosController < ActionController::Base
 
   def photo_details
 
-    uid = params.fetch("ph")
-    matching_photos= Photo.where({ :id=> uid})
+    phid = params.fetch("ph")
+    matching_photos= Photo.where({ :id=> phid})
 
     @the_photo = matching_photos.at(0)
 
@@ -33,49 +33,49 @@ class PhotosController < ActionController::Base
     redirect_to("/photos")
   end
 
-  def insert_photo
-  input_image=params.fetch("q_image")
-  input_caption=params.fetch("q_caption")
-  input_owner_id=params.fetch("q_ownid")
-
-    a_new_photo = Photo.new
-    a_new_photo.image = input_image
-    a_new_photo.caption = input_caption    
-    a_new_photo.owner_id = input_owner_id
-
-    a_new_photo.save
+  def add_photo
+      user_id_check=params.fetch("q_ownid")
+      phobj= user_id.own_photos
+      if ( phobj.at(0)!= nil)
+      phobj.image = params.fetch("q_image")
+      phobj.caption = params.fetch("q_caption") 
+      phobj.owner_id = params.fetch("q_ownid")
+      phobj.save
+      
         #render({ :template => "photo_templates/create_photo.html.erb" })
+      redirect_to("/photos/#{phobj.id}")
+    else
+      redirect_to("/photos")
+    end
 
-      redirect_to("/photos/"+a_new_photo.id.to_s)
   end
 
   def update_photo
-
-    input_photo_id = params.fetch("q_phoid")
-    input_author_id = params.fetch("q_authid")
-    input_new_comm = params.fetch("q_newcomm", "fallback")
-
-    new_comm.id= input_photo_id
+    
+    input_photo_id = params.fetch("phoid")
+    
+    matching_photo = Photo.where({ :id => input_photo_id})
     a_new_photo = matching_photo.at(0)
 
 
-    a_new_photo.image = input_image
-    a_new_photo.caption = input_cap    
+    a_new_photo.image = params.fetch("q_image")
+    a_new_photo.caption = params.fetch("q_caption")   
     a_new_photo.save
 
     redirect_to("/photos/#{a_new_photo.id}")
   end
 
   def add_comment
-    @new_comm= Comment.new
+    @new_comm = Comment.new
+    phot_id = params.fetch("photo_id")
 
-    @new_comm.photo_id = params.fetch("phoid")
+   # @new_comm.photo_id = params.fetch("phoid")
     @new_comm.author_id = params.fetch("q_authid")
     @new_comm.body = params.fetch("q_newcomm", "fallback_Comm")
     
     @new_comm.save
 
-    redirect_to("/photos/#{a_new_photo.id}")
+    redirect_to("/photos/#{phot_id}")
   end
 
 end
