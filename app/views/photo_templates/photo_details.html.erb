@@ -1,3 +1,10 @@
+<nav>
+      <ul>
+         <li> <a href="/users">Users</a> </li>
+         <li> <a href="/photos">Photos</a> </li>
+      </ul>
+</nav>
+
 <h1>Photo Details</h1>
 
 
@@ -26,10 +33,10 @@
   <dd>
     <form action="/update_photo/<%= @the_photo.id %>">
       <label for="browser_image">Image</label>
-      <input id="browser_image" type="text" name="input_image" placeholder="Enter a URL for the image..." value="https://robohash.org/dolorehicincidunt.png?size=300x300&amp;set=set1">
+      <input id="browser_image" type="text" name="q_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image %>">
 
       <label for="browser_caption">Caption</label>
-      <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo...">Once you’ve accepted your flaws, no one can use them against you.</textarea>
+      <textarea id="browser_caption" name="q_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption%></textarea>
 
       <button>Update photo</button>
     </form>
@@ -67,3 +74,20 @@
   </tr>
   <% end %>
 </table>
+
+<h1>Add a new comment</h1>
+
+
+  <dd>
+    <form action="/add_comment/<%= @newcomm.photo_id %>">
+      <label for="image">Photo ID</label>
+      <input id="image" type="text" name="q_phoid" value="<%= @the_photo.id %>">
+
+      <label for="browser">Author ID</label>
+      <input id="browser" name="q_authid">
+
+      <label for="browser_comment">Comment</label>
+      <textarea id="browser_comment" type="text" name="q_newcomm" placeholder="Enter a comment..."></textarea>
+
+      <button>Add comment</button>
+    </form>

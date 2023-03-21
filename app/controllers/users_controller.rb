@@ -15,11 +15,31 @@ class UsersController < ActionController::Base
 
     @the_user = matching_usernames.at(0)
 
-    if @the_user == nil
-      redirect_to("/404")
-    else
     render({ :template => "user_templates/user_details.html.erb" })
-    end
+    
+  end
+
+  def insert_user
+    @uname = params.fetch("q_username")
+
+    new_person = User.new
+    new_person.username= @uname
+    new_id = new_person.id
+
+    new_person.save 
+
+    redirect_to("/users/"+ new_person.username.to_s)
+  end
+
+  def update_user
+    the_id = params.fetch("the_user_id")
+    user_up = User.where({ :id => the_id}).at(0)
+
+    user_up.username = params.fetch("q_username")
+
+    user_up.save 
+
+    redirect_to("/users/#{user_up.username}")
   end
 
 end

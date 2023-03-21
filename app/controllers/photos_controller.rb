@@ -49,4 +49,33 @@ class PhotosController < ActionController::Base
       redirect_to("/photos/"+a_new_photo.id.to_s)
   end
 
+  def update_photo
+
+    input_photo_id = params.fetch("q_phoid")
+    input_author_id = params.fetch("q_authid")
+    input_new_comm = params.fetch("q_newcomm", "fallback")
+
+    new_comm.id= input_photo_id
+    a_new_photo = matching_photo.at(0)
+
+
+    a_new_photo.image = input_image
+    a_new_photo.caption = input_cap    
+    a_new_photo.save
+
+    redirect_to("/photos/#{a_new_photo.id}")
+  end
+
+  def add_comment
+    @new_comm= Comment.new
+
+    @new_comm.photo_id = params.fetch("phoid")
+    @new_comm.author_id = params.fetch("q_authid")
+    @new_comm.body = params.fetch("q_newcomm", "fallback_Comm")
+    
+    @new_comm.save
+
+    redirect_to("/photos/#{a_new_photo.id}")
+  end
+
 end

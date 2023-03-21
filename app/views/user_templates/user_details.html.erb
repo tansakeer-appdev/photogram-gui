@@ -13,7 +13,15 @@
 
  <dt>Edit User</dt>
 
- <dd>form goes here</dd>
+ <dd>
+ <form action="/update_user/<%= @the_user.id %>">
+  <label for="la">Username</label>
+  <input id="la" type="text" name="q_username" placeholder="<%= @the_user.username %>" value="<%= @the_user.username %>"> 
+
+  <button>Update user</button> 
+
+</form>
+</dd>
 </dl>
 
 <h2>Own Photos(<%= @the_user.own_photos.size %>)</h2>
