@@ -34,19 +34,18 @@ class PhotosController < ActionController::Base
   end
 
   def add_photo
-      user_id_check=params.fetch("q_ownid")
-      phobj= user_id.own_photos
-      if ( phobj.at(0)!= nil)
+     phobj = Photo.new
+
       phobj.image = params.fetch("q_image")
       phobj.caption = params.fetch("q_caption") 
       phobj.owner_id = params.fetch("q_ownid")
       phobj.save
       
-        #render({ :template => "photo_templates/create_photo.html.erb" })
-      redirect_to("/photos/#{phobj.id}")
-    else
-      redirect_to("/photos")
-    end
+      if phobj.save 
+        redirect_to("/photos/#{phobj.id}")
+      else
+      render plain: "check ya code bro"
+      end
 
   end
 
